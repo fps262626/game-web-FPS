@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Web Page</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo">MyPage</div>
+      <nav class="nav">
+        <a href="#home">ホーム</a>
+        <a href="#features">特徴</a>
+        <a href="#about">概要</a>
+        <button id="theme-toggle" class="btn-icon" aria-label="テーマ切り替え">🌙</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main>
+    <!-- ヒーローセクション -->
+    <section id="home" class="hero">
+      <div class="container hero-content">
+        <span class="badge">ようこそ</span>
+        <h1>シンプルで美しい<br><span class="gradient-text">ウェブページへ</span></h1>
+        <p class="hero-desc">
+          HTML, CSS, JavaScriptで構築された、モダンでレスポンシブなウェブページです。<br>
+          お好みに合わせて自由にカスタマイズしてください。
+        </p>
+        <div class="hero-actions">
+          <a href="#features" class="btn btn-primary">特徴を見る</a>
+          <button id="counter-btn" class="btn btn-secondary">クリック数: <span id="click-count">0</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 特徴セクション -->
+    <section id="features" class="features">
+      <div class="container">
+        <h2 class="section-title">主な特徴</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>軽量・高速</h3>
+            <p>外部フレームワークを使わない純粋なHTML/CSS/JSで動作するため、高速に読み込まれます。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">📱</div>
+            <h3>レスポンシブ対応</h3>
+            <p>PC・タブレット・スマートフォンのどの画面サイズでも快適に閲覧できます。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎨</div>
+            <h3>ダークモード対応</h3>
+            <p>右上のボタンでライトテーマとダークテーマをワンクリックで切り替え可能です。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 概要セクション -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-box">
+          <h2>はじめの一歩</h2>
+          <p>
+            このページは <code>index.html</code>, <code>style.css</code>, <code>script.js</code> の3つのファイルで構成されています。<br>
+            テキストやカラー、コンポーネントを追加して独自のWebサイトに発展させましょう！
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 MyPage. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
