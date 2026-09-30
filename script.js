@@ -261,6 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const soundToggleBtn = document.getElementById('sound-toggle');
   const fullscreenToggleBtn = document.getElementById('fullscreen-toggle');
+  const screenExpandBtn = document.getElementById('screen-expand-btn');
   const themeToggleBtn = document.getElementById('theme-toggle');
 
   const quickReloadBtn = document.getElementById('quick-reload-btn');
@@ -1138,8 +1139,14 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('keydown', (e) => {
     if (e.key === 'r' || e.key === 'R') {
       reloadWeapon();
-    } else if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
+    } else if (e.key === 'p' || e.key === 'P') {
       pauseGame();
+    } else if (e.key === 'Escape') {
+      if (isFullscreenActive()) {
+        exitFullscreen();
+      } else {
+        pauseGame();
+      }
     } else if (e.key === 'f' || e.key === 'F') {
       toggleFullscreen();
     }
@@ -1184,22 +1191,126 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   updateSoundIcon();
 
-  // 全画面モード (Fullscreen)
-  function toggleFullscreen() {
+  // ==========================================
+  // 全画面 & 大画面拡大モード (Fullscreen / Maximized)
+  // ==========================================
+  let isMaximized = false;
+
+  function isFullscreenActive() {
     const card = document.getElementById('game-viewport-card');
-    if (!document.fullscreenElement) {
-      if (card.requestFullscreen) {
-        card.requestFullscreen();
-      } else if (card.webkitRequestFullscreen) {
-        card.webkitRequestFullscreen();
-      }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
+    return !!(
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      isMaximized ||
+      (card && card.classList.contains('is-maximized'))
+    );
+  }
+
+  function updateExpandButtons(active) {
+    if (screenExpandBtn) {
+      const expandText = screenExpandBtn.querySelector('.expand-text');
+      const expandIcon = screenExpandBtn.querySelector('.expand-icon');
+      if (active) {
+        if (expandText) expandText.textContent = '元に戻す';
+        if (expandIcon) expandIcon.textContent = '🗗';
+        screenExpandBtn.classList.add('active');
+        screenExpandBtn.setAttribute('title', '元の画面サイズに戻す (ESC)');
+      } else {
+        if (expandText) expandText.textContent = '画面拡大';
+        if (expandIcon) expandIcon.textContent = '⛶';
+        screenExpandBtn.classList.remove('active');
+        screenExpandBtn.setAttribute('title', '画面を拡大 / 全画面表示');
       }
     }
+
+    if (fullscreenToggleBtn) {
+      fullscreenToggleBtn.textContent = active ? '🗗' : '⛶';
+      fullscreenToggleBtn.setAttribute('title', active ? '元のサイズに戻す' : '全画面表示 (F)');
+    }
   }
-  fullscreenToggleBtn.addEventListener('click', toggleFullscreen);
+
+  function enterFullscreen() {
+    const card = document.getElementById('game-viewport-card');
+    if (!card) return;
+
+    // スマホ(iOS Safari等)やネイティブAPI拒否時のフォールバック
+    const applyCssMaximize = () => {
+      card.classList.add('is-maximized');
+      document.body.classList.add('game-is-maximized');
+      isMaximized = true;
+      updateExpandButtons(true);
+    };
+
+    const req = card.requestFullscreen || card.webkitRequestFullscreen || card.mozRequestFullScreen || card.msRequestFullscreen;
+    if (req) {
+      try {
+        const promise = req.call(card);
+        if (promise && promise.then) {
+          promise.then(() => {
+            updateExpandButtons(true);
+          }).catch(() => {
+            // ネイティブ全画面失敗時にCSS拡大へ
+            applyCssMaximize();
+          });
+        } else {
+          updateExpandButtons(true);
+        }
+      } catch (err) {
+        applyCssMaximize();
+      }
+    } else {
+      applyCssMaximize();
+    }
+  }
+
+  function exitFullscreen() {
+    const card = document.getElementById('game-viewport-card');
+
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+      if (exit) {
+        try {
+          exit.call(document);
+        } catch (e) {
+          // ignore
+        }
+      }
+    }
+
+    if (card) {
+      card.classList.remove('is-maximized');
+    }
+    document.body.classList.remove('game-is-maximized');
+    isMaximized = false;
+    updateExpandButtons(false);
+  }
+
+  function toggleFullscreen() {
+    if (isFullscreenActive()) {
+      exitFullscreen();
+    } else {
+      enterFullscreen();
+    }
+  }
+
+  if (screenExpandBtn) {
+    screenExpandBtn.addEventListener('click', toggleFullscreen);
+  }
+  if (fullscreenToggleBtn) {
+    fullscreenToggleBtn.addEventListener('click', toggleFullscreen);
+  }
+
+  // ネイティブ全画面イベント監視
+  ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evtName => {
+    document.addEventListener(evtName, () => {
+      const isNativeFull = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      if (!isNativeFull && !isMaximized) {
+        updateExpandButtons(false);
+      } else if (isNativeFull) {
+        updateExpandButtons(true);
+      }
+    });
+  });
 
   // カラーテーマ切り替え (Cyber / Tactical)
   const savedTheme = localStorage.getItem('fps_theme') || 'cyber';

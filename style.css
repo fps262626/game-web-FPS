@@ -319,6 +319,113 @@ main {
 .frame-corner.bottom-left { bottom: -2px; left: -2px; border-right: none; border-top: none; }
 .frame-corner.bottom-right { bottom: -2px; right: -2px; border-left: none; border-top: none; }
 
+/* ゲーム画面上部コントロールバー */
+.game-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 6px 10px;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
+  margin-bottom: 10px;
+  font-family: var(--font-sub);
+}
+
+.top-bar-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-bar-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-cyber);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.12);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+}
+
+.top-bar-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  animation: pulse-dot 1.5s infinite;
+}
+
+.top-bar-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* 画面拡大ボタン */
+.btn-expand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15) 0%, rgba(var(--accent-rgb), 0.05) 100%);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-family: var(--font-cyber);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.25);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-expand .expand-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.btn-expand:hover {
+  background: var(--accent);
+  color: var(--bg-darkest);
+  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-expand:active {
+  transform: scale(0.96);
+}
+
+/* 拡大中（元に戻す）時のボタンスタイル */
+.btn-expand.active {
+  background: linear-gradient(135deg, rgba(var(--accent-pink-rgb), 0.25) 0%, rgba(var(--accent-pink-rgb), 0.1) 100%);
+  border-color: var(--accent-pink);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(var(--accent-pink-rgb), 0.4);
+}
+
+.btn-expand.active:hover {
+  background: var(--accent-pink);
+  color: #fff;
+  box-shadow: 0 0 22px rgba(var(--accent-pink-rgb), 0.8);
+}
+
 /* ゲームコンテナ本体 */
 .game-container {
   position: relative;
@@ -1153,24 +1260,71 @@ main {
   color: var(--accent);
 }
 
-/* --- 全画面モード (Fullscreen) --- */
-:fullscreen .game-viewport-card,
-:-webkit-full-screen .game-viewport-card {
-  max-width: 100vw;
-  width: 100vw;
-  height: 100vh;
-  padding: 0;
-  border-radius: 0;
-  border: none;
-  display: flex;
-  flex-direction: column;
+/* --- 全画面・大画面拡大モード (Fullscreen & Maximized) --- */
+#game-viewport-card:fullscreen,
+#game-viewport-card:-webkit-full-screen,
+#game-viewport-card.is-maximized {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-width: 100vw !important;
+  max-height: 100dvh !important;
+  padding: 8px 12px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: #030509 !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
 }
 
-:fullscreen .game-container,
-:-webkit-full-screen .game-container {
+body.game-is-maximized {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+#game-viewport-card:fullscreen .frame-corner,
+#game-viewport-card:-webkit-full-screen .frame-corner,
+#game-viewport-card.is-maximized .frame-corner {
+  display: none !important;
+}
+
+#game-viewport-card:fullscreen .game-top-bar,
+#game-viewport-card:-webkit-full-screen .game-top-bar,
+#game-viewport-card.is-maximized .game-top-bar {
+  flex-shrink: 0;
+  margin-bottom: 6px;
+  padding: 4px 6px;
+  border-bottom-color: rgba(var(--accent-rgb), 0.25);
+}
+
+#game-viewport-card:fullscreen .game-container,
+#game-viewport-card:-webkit-full-screen .game-container,
+#game-viewport-card.is-maximized .game-container {
+  flex: 1 1 auto;
   width: 100%;
-  height: 100%;
-  border-radius: 0;
+  height: auto;
+  max-height: calc(100dvh - 88px);
+  max-width: calc((100dvh - 88px) * 16 / 9);
+  margin: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+}
+
+#game-viewport-card:fullscreen .game-toolbar,
+#game-viewport-card:-webkit-full-screen .game-toolbar,
+#game-viewport-card.is-maximized .game-toolbar {
+  flex-shrink: 0;
+  padding: 6px 4px 2px;
 }
 
 /* --- レスポンシブ対応 --- */
@@ -1186,6 +1340,28 @@ main {
   }
   .arena-subtitle {
     font-size: 0.95rem;
+  }
+  .game-top-bar {
+    padding: 2px 2px 8px;
+    margin-bottom: 8px;
+  }
+  .top-bar-title {
+    display: none; /* スマホではタイトルを隠して省スペース */
+  }
+  .btn-expand {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  #game-viewport-card:fullscreen,
+  #game-viewport-card:-webkit-full-screen,
+  #game-viewport-card.is-maximized {
+    padding: 4px 6px !important;
+  }
+  #game-viewport-card:fullscreen .game-container,
+  #game-viewport-card:-webkit-full-screen .game-container,
+  #game-viewport-card.is-maximized .game-container {
+    max-height: calc(100dvh - 76px);
+    max-width: calc((100dvh - 76px) * 16 / 9);
   }
   .game-hud {
     padding: 10px;
