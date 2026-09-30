@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CYBER FPS ARENA - Web Browser FPS Game</title>
-  <meta name="description" content="ブラウザですぐに遊べる近未来サイバーFPSシューティングゲーム。反射神経とエイム精度を試そう！">
+  <title>NEON GAME HUB - Cyber Web Game Platform</title>
+  <meta name="description" content="ネオンパープルと黒の世界観で楽しむマルチWebゲームポータル。内蔵FPS射撃ゲームや外部Webゲームを大画面でプレイ！">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,15 +20,15 @@
     <div class="container header-container">
       <div class="logo">
         <span class="logo-icon">⚡</span>
-        <span class="logo-text">CYBER <span class="text-accent">FPS</span> ARENA</span>
-        <span class="system-status"><span class="status-dot"></span>SYSTEM ONLINE</span>
+        <span class="logo-text">NEON <span class="text-accent">GAME</span> HUB</span>
+        <span class="system-status"><span class="status-dot"></span>MULTI-GAME PORTAL</span>
       </div>
       <nav class="nav">
-        <a href="#arena" class="nav-link active">プレイ</a>
+        <a href="#apps" class="nav-link active">アプリ一覧</a>
+        <a href="#arena" class="nav-link">ゲーム画面</a>
         <a href="#controls" class="nav-link">操作方法</a>
-        <a href="#features" class="nav-link">特徴</a>
-        <a href="#records" class="nav-link">戦績</a>
         <a href="#customize" class="nav-link">ゲーム導入</a>
+        <a href="#records" class="nav-link">戦績</a>
       </nav>
       <div class="header-actions">
         <button id="sound-toggle" class="btn-icon" title="サウンド切り替え" aria-label="サウンド切り替え">🔊</button>
@@ -45,9 +45,90 @@
       <div class="container">
         <!-- セクションヘッダー -->
         <div class="arena-header">
-          <div class="tactical-badge">TACTICAL SHOOTING SIMULATOR</div>
-          <h1 class="glitch-title" data-text="CYBER TARGET FPS">CYBER TARGET FPS</h1>
-          <p class="arena-subtitle">ターゲットを素早く撃ち抜け！エイム精度と反射神経を極めるWeb FPSゲーム</p>
+          <div class="tactical-badge">NEON PURPLE & BLACK GAMING PORTAL</div>
+          <h1 class="glitch-title" data-text="NEON GAME HUB">NEON GAME HUB</h1>
+          <p class="arena-subtitle">いろんなWebゲームが集結するマルチプラットフォーム。アプリを選択して大画面で楽しもう！</p>
+        </div>
+
+        <!-- ゲームアプリ選択ハブ (GAME APPS DOCK) -->
+        <div class="game-apps-section" id="apps">
+          <div class="apps-header">
+            <div class="apps-title-wrap">
+              <span class="apps-badge">APPS LIBRARY</span>
+              <h2 class="apps-title">GAME APPS <span class="apps-count">4 SLOTS</span></h2>
+            </div>
+            <p class="apps-sub">プレイしたいゲームアプリを選択してください。現在「🎯 射撃ゲーム」が起動中です。</p>
+          </div>
+
+          <div class="apps-grid" id="apps-grid">
+            <!-- アプリ 1: 射撃ゲーム (CYBER TARGET FPS) -->
+            <div class="app-card active" data-app-id="fps" id="app-card-fps">
+              <div class="app-card-glow"></div>
+              <div class="app-icon-wrap">
+                <span class="app-icon">🎯</span>
+                <span class="app-status-pill running">実行中</span>
+              </div>
+              <div class="app-meta">
+                <div class="app-category">3D AIM SHOOTING</div>
+                <h3 class="app-name">射撃ゲーム (FPS)</h3>
+                <p class="app-desc">ターゲットを撃ち抜くハイスピードエイム射撃ゲーム（内蔵アプリ）</p>
+              </div>
+              <button class="app-launch-btn" id="btn-select-fps">
+                <span>▶ 射撃ゲームをプレイ</span>
+              </button>
+            </div>
+
+            <!-- アプリ 2: 外部Webゲーム読み込み (CUSTOM GAME LOADER) -->
+            <div class="app-card" data-app-id="custom" id="app-card-custom">
+              <div class="app-card-glow"></div>
+              <div class="app-icon-wrap">
+                <span class="app-icon">🎮</span>
+                <span class="app-status-pill ready">URL LOAD</span>
+              </div>
+              <div class="app-meta">
+                <div class="app-category">WEBGL / IFRAME</div>
+                <h3 class="app-name">カスタムゲーム読込</h3>
+                <p class="app-desc">任意のWebゲームURLを入力してこの大画面枠で即座にプレイ</p>
+              </div>
+              <button class="app-launch-btn" id="btn-select-custom">
+                <span>⚡ URL読込で起動</span>
+              </button>
+            </div>
+
+            <!-- アプリ 3: レトロRPGアドベンチャー -->
+            <div class="app-card" data-app-id="rpg" id="app-card-rpg">
+              <div class="app-card-glow"></div>
+              <div class="app-icon-wrap">
+                <span class="app-icon">⚔️</span>
+                <span class="app-status-pill ready">OPEN WORLD</span>
+              </div>
+              <div class="app-meta">
+                <div class="app-category">RETRO RPG</div>
+                <h3 class="app-name">レトロ・クエスト</h3>
+                <p class="app-desc">勇者と8つの試練に挑むドット絵オープンワールドRPG</p>
+              </div>
+              <button class="app-launch-btn" id="btn-select-rpg">
+                <span>⚔️ RPGを起動</span>
+              </button>
+            </div>
+
+            <!-- アプリ 4: 新規ゲーム追加スロット -->
+            <div class="app-card" id="app-card-add">
+              <div class="app-card-glow"></div>
+              <div class="app-icon-wrap">
+                <span class="app-icon">➕</span>
+                <span class="app-status-pill new">ADD GAME</span>
+              </div>
+              <div class="app-meta">
+                <div class="app-category">NEW APP SLOT</div>
+                <h3 class="app-name">ゲームを追加</h3>
+                <p class="app-desc">独自のHTML5 / Unity WebGLゲームを簡単に追加組み込み</p>
+              </div>
+              <a href="#customize" class="app-launch-btn">
+                <span>⚙️ 導入ガイドを見る</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         <!-- ゲーム画面コンテナ -->
@@ -61,10 +142,11 @@
           <!-- ゲーム画面上部コントロールバー（拡大ボタン配置エリア） -->
           <div class="game-top-bar" id="game-top-bar">
             <div class="top-bar-info">
-              <span class="top-bar-indicator"><span class="top-bar-dot"></span>LIVE</span>
-              <span class="top-bar-title">CYBER TARGET FEED</span>
+              <span class="top-bar-indicator"><span class="top-bar-dot"></span>ACTIVE</span>
+              <span class="top-bar-title" id="active-app-title">🎯 射撃ゲーム (CYBER TARGET FPS)</span>
             </div>
             <div class="top-bar-actions">
+              <button id="btn-back-to-fps" class="quick-btn hidden" style="margin-right: 8px;"><span>🎯</span> 射撃ゲームに戻る</button>
               <button id="screen-expand-btn" class="btn-expand" title="画面を拡大 / 全画面表示" aria-label="画面拡大">
                 <span class="expand-icon">⛶</span>
                 <span class="expand-text">画面拡大</span>
@@ -74,7 +156,19 @@
 
           <!-- ゲームコンテナ本体 -->
           <div class="game-container" id="game-container">
-            <!-- ゲームCanvas -->
+            <!-- 外部ゲーム・URL読込ビュー (iframe) -->
+            <div class="custom-loader-view" id="custom-loader-view">
+              <div class="loader-bar">
+                <input type="url" id="custom-game-url" class="loader-input" placeholder="ゲームURLを入力 (例: https://...)">
+                <button id="btn-load-custom-url" class="loader-submit-btn">起動 (RUN)</button>
+                <button id="btn-loader-close" class="loader-return-btn">✕ 射撃ゲームに戻る</button>
+              </div>
+              <div class="custom-iframe-wrap">
+                <iframe id="custom-game-frame" class="custom-iframe" src="" allow="autoplay; fullscreen; gamepad" allowfullscreen></iframe>
+              </div>
+            </div>
+
+            <!-- ゲームCanvas (射撃ゲーム本体) -->
             <canvas id="game-canvas" width="1280" height="720"></canvas>
 
             <!-- ゲーム内常時HUD -->
@@ -369,8 +463,8 @@
   <!-- フッター -->
   <footer class="footer">
     <div class="container footer-container">
-      <div class="footer-logo">CYBER <span class="text-accent">FPS</span> ARENA</div>
-      <p class="footer-copy">&copy; 2026 FPS ARENA. Created for gamers & creators.</p>
+      <div class="footer-logo">NEON <span class="text-accent">GAME</span> HUB</div>
+      <p class="footer-copy">&copy; 2026 NEON GAME HUB. Created for gamers & creators.</p>
       <div class="footer-links">
         <a href="#arena">Top</a>
         <a href="#controls">Controls</a>

@@ -9,51 +9,57 @@
   --font-sub: 'Rajdhani', -apple-system, sans-serif;
   --font-body: 'Noto Sans JP', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  /* Cyber Theme (Default) */
-  --bg-darkest: #05070e;
-  --bg-primary: #080b16;
-  --bg-secondary: #0d1224;
-  --bg-card: rgba(14, 20, 40, 0.75);
-  --bg-overlay: rgba(6, 8, 16, 0.88);
+  /* Neon Purple & Deep Black Theme */
+  --bg-darkest: #030007;
+  --bg-primary: #080212;
+  --bg-secondary: #120426;
+  --bg-card: rgba(22, 7, 44, 0.78);
+  --bg-overlay: rgba(5, 1, 14, 0.94);
 
-  --accent: #00f0ff;
-  --accent-rgb: 0, 240, 255;
-  --accent-pink: #ff0055;
-  --accent-pink-rgb: 255, 0, 85;
+  --accent: #bf00ff; /* 鮮やかなネオンパープル */
+  --accent-rgb: 191, 0, 255;
+  --accent-glow: rgba(191, 0, 255, 0.55);
+  --accent-violet: #a855f7;
+  --accent-magenta: #ff007f;
+  --accent-pink: #f43f5e;
+  --accent-pink-rgb: 244, 63, 94;
+  --accent-cyan: #00f0ff;
   --accent-amber: #ffd700;
   --accent-green: #00ff88;
 
-  --text-main: #f0f6fc;
-  --text-muted: #8b9bb4;
-  --text-sub: #54657e;
+  --text-main: #f5f3ff;
+  --text-muted: #c084fc;
+  --text-sub: #7e6b9c;
 
-  --border: rgba(0, 240, 255, 0.25);
-  --border-strong: rgba(0, 240, 255, 0.6);
-  --border-glow: 0 0 15px rgba(0, 240, 255, 0.35);
+  --border: rgba(191, 0, 255, 0.35);
+  --border-strong: rgba(191, 0, 255, 0.75);
+  --border-glow: 0 0 20px rgba(191, 0, 255, 0.45);
 
-  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 14px;
+  --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
 }
 
 [data-theme="tactical"] {
-  --bg-darkest: #070705;
-  --bg-primary: #12110c;
-  --bg-secondary: #1c1a13;
-  --bg-card: rgba(28, 26, 19, 0.8);
-  --bg-overlay: rgba(10, 9, 6, 0.9);
+  --bg-darkest: #040008;
+  --bg-primary: #0a0117;
+  --bg-secondary: #16032d;
+  --bg-card: rgba(26, 6, 50, 0.82);
+  --bg-overlay: rgba(8, 1, 18, 0.94);
 
-  --accent: #ffb703;
-  --accent-rgb: 255, 183, 3;
-  --accent-pink: #fb8500;
-  --accent-pink-rgb: 251, 133, 0;
+  --accent: #d946ef; /* ネオンマゼンタパープル */
+  --accent-rgb: 217, 70, 239;
+  --accent-violet: #c084fc;
+  --accent-magenta: #ff00a0;
+  --accent-pink: #f43f5e;
+  --accent-pink-rgb: 244, 63, 94;
   --accent-amber: #ffdd00;
-  --accent-green: #2ec4b6;
+  --accent-green: #00ffc2;
 
-  --border: rgba(255, 183, 3, 0.28);
-  --border-strong: rgba(255, 183, 3, 0.65);
-  --border-glow: 0 0 15px rgba(255, 183, 3, 0.35);
+  --border: rgba(217, 70, 239, 0.38);
+  --border-strong: rgba(217, 70, 239, 0.8);
+  --border-glow: 0 0 20px rgba(217, 70, 239, 0.5);
 }
 
 /* --- リセット & 基本設定 --- */
@@ -70,6 +76,12 @@ html {
 body {
   font-family: var(--font-body);
   background-color: var(--bg-darkest);
+  background-image: 
+    radial-gradient(ellipse 90% 50% at 50% 0%, rgba(191, 0, 255, 0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 40% at 85% 50%, rgba(168, 85, 247, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 15% 85%, rgba(255, 0, 127, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, #05010d 0%, #030007 100%);
+  background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
@@ -83,19 +95,19 @@ body {
   position: fixed;
   inset: 0;
   background-image: 
-    linear-gradient(rgba(0, 240, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
-  background-size: 50px 50px;
+    linear-gradient(rgba(191, 0, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(191, 0, 255, 0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
   pointer-events: none;
   z-index: 0;
-  mask-image: radial-gradient(circle at 50% 40%, black 30%, transparent 85%);
-  -webkit-mask-image: radial-gradient(circle at 50% 40%, black 30%, transparent 85%);
+  mask-image: radial-gradient(circle at 50% 40%, black 35%, transparent 90%);
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, black 35%, transparent 90%);
 }
 
 .cyber-vignette {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(5, 7, 14, 0.95) 100%);
+  background: radial-gradient(circle at 50% 45%, transparent 50%, rgba(3, 0, 7, 0.95) 98%);
   pointer-events: none;
   z-index: 1;
 }
@@ -293,6 +305,201 @@ main {
   margin: 0 auto;
 }
 
+/* --- ゲームアプリ選択ハブ (GAME APPS DOCK) --- */
+.game-apps-section {
+  margin-bottom: 28px;
+}
+
+.apps-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.apps-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.apps-badge {
+  font-family: var(--font-cyber);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.12);
+  border: 1px solid var(--accent);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.3);
+}
+
+.apps-title {
+  font-family: var(--font-cyber);
+  font-size: 1.35rem;
+  letter-spacing: 0.06em;
+  color: #fff;
+}
+
+.apps-count {
+  font-size: 0.8rem;
+  color: var(--accent-violet);
+  background: rgba(168, 85, 247, 0.15);
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 6px;
+}
+
+.apps-sub {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.app-card {
+  position: relative;
+  background: linear-gradient(145deg, rgba(26, 8, 52, 0.75) 0%, rgba(12, 3, 26, 0.85) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.app-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(191, 0, 255, 0.35);
+}
+
+.app-card.active {
+  border-color: var(--accent);
+  background: linear-gradient(145deg, rgba(46, 12, 90, 0.85) 0%, rgba(18, 4, 38, 0.95) 100%);
+  box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.4), inset 0 0 15px rgba(var(--accent-rgb), 0.15);
+}
+
+.app-card-glow {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.35) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.app-icon-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-icon {
+  font-size: 1.9rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.6));
+}
+
+.app-status-pill {
+  font-family: var(--font-cyber);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.app-status-pill.running {
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--accent-green);
+  border-color: rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+}
+
+.app-status-pill.ready {
+  background: rgba(var(--accent-rgb), 0.15);
+  color: var(--accent);
+  border-color: rgba(var(--accent-rgb), 0.4);
+}
+
+.app-status-pill.new {
+  background: rgba(255, 215, 0, 0.15);
+  color: var(--accent-amber);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.app-category {
+  font-family: var(--font-sub);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-violet);
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+.app-name {
+  font-family: var(--font-cyber);
+  font-size: 1rem;
+  color: #fff;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+
+.app-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.app-launch-btn {
+  margin-top: auto;
+  padding: 7px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-family: var(--font-cyber);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.app-card:hover .app-launch-btn {
+  background: var(--accent);
+  color: var(--bg-darkest);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.5);
+}
+
+.app-card.active .app-launch-btn {
+  background: linear-gradient(135deg, var(--accent) 0%, #ff007f 100%);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.6);
+}
+
 /* --- ゲームビューポートカード --- */
 .game-viewport-card {
   position: relative;
@@ -445,6 +652,101 @@ main {
   height: 100%;
   display: block;
   cursor: crosshair;
+}
+
+/* 外部ゲームローダー & iframe表示用コンテナ */
+.custom-loader-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #040108;
+  z-index: 15;
+  display: none;
+  flex-direction: column;
+}
+
+.custom-loader-view.active {
+  display: flex;
+}
+
+.loader-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(14, 4, 30, 0.95);
+  border-bottom: 1px solid var(--border);
+  z-index: 2;
+}
+
+.loader-input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  padding: 7px 12px;
+  font-family: var(--font-sub);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.loader-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.4);
+}
+
+.loader-submit-btn, .loader-return-btn {
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-cyber);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.loader-submit-btn {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.4);
+}
+
+.loader-submit-btn:hover {
+  background: #d946ef;
+  box-shadow: 0 0 18px rgba(217, 70, 239, 0.6);
+}
+
+.loader-return-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-muted);
+}
+
+.loader-return-btn:hover {
+  background: rgba(255, 0, 85, 0.25);
+  border-color: var(--accent-pink);
+  color: #fff;
+}
+
+.custom-iframe-wrap {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #000;
+}
+
+.custom-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 /* --- ゲーム内HUD --- */

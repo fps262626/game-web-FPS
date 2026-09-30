@@ -268,6 +268,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const quickPauseBtn = document.getElementById('quick-pause-btn');
   const fpsDisplay = document.getElementById('fps-display');
 
+  // アプリ切り替え要素
+  const activeAppTitle = document.getElementById('active-app-title');
+  const btnBackToFps = document.getElementById('btn-back-to-fps');
+  const customLoaderView = document.getElementById('custom-loader-view');
+  const customGameUrlInput = document.getElementById('custom-game-url');
+  const btnLoadCustomUrl = document.getElementById('btn-load-custom-url');
+  const btnLoaderClose = document.getElementById('btn-loader-close');
+  const customGameFrame = document.getElementById('custom-game-frame');
+  const btnSelectFps = document.getElementById('btn-select-fps');
+  const btnSelectCustom = document.getElementById('btn-select-custom');
+  const btnSelectRpg = document.getElementById('btn-select-rpg');
+
   // 戦績要素
   const bestScoreDisplay = document.getElementById('best-score-display');
   const bestAccDisplay = document.getElementById('best-acc-display');
@@ -940,11 +952,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (ft.alpha <= 0) floatingTexts.splice(i, 1);
     }
 
-    // マズルフラッシュ描画
+    // マズルフラッシュ描画 (Neon Purple & Magenta Flash)
     if (muzzleFlash > 0) {
       ctx.save();
       ctx.globalAlpha = muzzleFlash;
-      ctx.fillStyle = 'rgba(0, 240, 255, 0.15)';
+      ctx.fillStyle = 'rgba(191, 0, 255, 0.18)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       // 発射炎
@@ -952,7 +964,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const gunY = canvas.height - 20;
       const grad = ctx.createRadialGradient(gunX, gunY, 5, gunX, gunY, 140);
       grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.3, '#00f0ff');
+      grad.addColorStop(0.3, '#bf00ff');
+      grad.addColorStop(0.7, '#ff007f');
       grad.addColorStop(1, 'transparent');
       ctx.fillStyle = grad;
       ctx.beginPath();
@@ -971,19 +984,19 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(render);
   }
 
-  // サイバーグリッド背景の描画
+  // サイバーグリッド背景の描画 (Neon Purple & Deep Black)
   function drawBackground(ctx) {
-    // ディープブラックグラデーション
+    // ディープブラック＆ネオンパープルグラデーション
     const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    bgGrad.addColorStop(0, '#060914');
-    bgGrad.addColorStop(0.65, '#0b1126');
-    bgGrad.addColorStop(1, '#05070e');
+    bgGrad.addColorStop(0, '#040008');
+    bgGrad.addColorStop(0.65, '#120324');
+    bgGrad.addColorStop(1, '#030007');
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // 地平線グリッド（パースペクティブ）
     ctx.save();
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.12)';
+    ctx.strokeStyle = 'rgba(191, 0, 255, 0.16)';
     ctx.lineWidth = 1;
 
     const horizonY = canvas.height * 0.65;
@@ -1012,7 +1025,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 遠景サイバーターゲット円（背景のハイテク飾り）
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.05)';
+    ctx.strokeStyle = 'rgba(191, 0, 255, 0.08)';
     ctx.beginPath();
     ctx.arc(canvas.width / 2, horizonY - 40, 180, 0, Math.PI * 2);
     ctx.arc(canvas.width / 2, horizonY - 40, 260, 0, Math.PI * 2);
@@ -1348,6 +1361,123 @@ document.addEventListener('DOMContentLoaded', () => {
       loadRecords();
     }
   });
+
+  // ==========================================
+  // 10. マルチゲームアプリ切り替え機能 (Game Apps Hub)
+  // ==========================================
+  function switchToFpsGame() {
+    if (customLoaderView) customLoaderView.classList.remove('active');
+    if (customGameFrame) customGameFrame.src = '';
+    canvas.style.display = 'block';
+    const hud = document.getElementById('game-hud');
+    if (hud) hud.style.display = 'flex';
+    if (activeAppTitle) activeAppTitle.textContent = '🎯 射撃ゲーム (CYBER TARGET FPS)';
+    if (btnBackToFps) btnBackToFps.classList.add('hidden');
+
+    document.querySelectorAll('.app-card').forEach(card => {
+      const isFps = card.getAttribute('data-app-id') === 'fps';
+      card.classList.toggle('active', isFps);
+      const pill = card.querySelector('.app-status-pill');
+      if (pill) {
+        if (isFps) {
+          pill.className = 'app-status-pill running';
+          pill.textContent = '実行中';
+        } else if (card.getAttribute('data-app-id') === 'custom') {
+          pill.className = 'app-status-pill ready';
+          pill.textContent = 'URL LOAD';
+        } else if (card.getAttribute('data-app-id') === 'rpg') {
+          pill.className = 'app-status-pill ready';
+          pill.textContent = 'OPEN WORLD';
+        }
+      }
+    });
+
+    const fpsCard = document.getElementById('game-viewport-card');
+    if (fpsCard) {
+      fpsCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function switchToCustomGame(url = '', appTitle = '🎮 カスタムゲーム読込') {
+    if (gameState === STATE.PLAYING) {
+      pauseGame();
+    }
+
+    canvas.style.display = 'none';
+    const hud = document.getElementById('game-hud');
+    if (hud) hud.style.display = 'none';
+
+    if (customLoaderView) {
+      customLoaderView.classList.add('active');
+    }
+
+    if (url) {
+      if (customGameUrlInput) customGameUrlInput.value = url;
+      if (customGameFrame) customGameFrame.src = url;
+    } else {
+      if (customGameUrlInput && !customGameUrlInput.value) {
+        customGameUrlInput.value = 'https://fps262626.github.io/game-web-FPS/';
+      }
+      if (customGameFrame && customGameUrlInput.value && !customGameFrame.src) {
+        customGameFrame.src = customGameUrlInput.value;
+      }
+    }
+
+    if (activeAppTitle) activeAppTitle.textContent = appTitle;
+    if (btnBackToFps) btnBackToFps.classList.remove('hidden');
+
+    const isRpg = appTitle.includes('RPG');
+    document.querySelectorAll('.app-card').forEach(card => {
+      const cardAppId = card.getAttribute('data-app-id');
+      const isThis = isRpg ? cardAppId === 'rpg' : cardAppId === 'custom';
+      card.classList.toggle('active', isThis);
+      const pill = card.querySelector('.app-status-pill');
+      if (pill) {
+        if (isThis) {
+          pill.className = 'app-status-pill running';
+          pill.textContent = '実行中';
+        } else if (cardAppId === 'fps') {
+          pill.className = 'app-status-pill ready';
+          pill.textContent = 'STANDBY';
+        }
+      }
+    });
+
+    const fpsCard = document.getElementById('game-viewport-card');
+    if (fpsCard) {
+      fpsCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  // アプリ選択イベントリスナー
+  if (btnSelectFps) btnSelectFps.addEventListener('click', (e) => { e.stopPropagation(); switchToFpsGame(); });
+  const appCardFps = document.getElementById('app-card-fps');
+  if (appCardFps) appCardFps.addEventListener('click', switchToFpsGame);
+
+  if (btnSelectCustom) btnSelectCustom.addEventListener('click', (e) => { e.stopPropagation(); switchToCustomGame(); });
+  const appCardCustom = document.getElementById('app-card-custom');
+  if (appCardCustom) appCardCustom.addEventListener('click', () => switchToCustomGame());
+
+  if (btnSelectRpg) btnSelectRpg.addEventListener('click', (e) => {
+    e.stopPropagation();
+    switchToCustomGame('https://fps262626.github.io/game-web-FPS/', '⚔️ レトロ・クエスト (RETRO RPG)');
+  });
+  const appCardRpg = document.getElementById('app-card-rpg');
+  if (appCardRpg) appCardRpg.addEventListener('click', () => {
+    switchToCustomGame('https://fps262626.github.io/game-web-FPS/', '⚔️ レトロ・クエスト (RETRO RPG)');
+  });
+
+  if (btnLoadCustomUrl) {
+    btnLoadCustomUrl.addEventListener('click', () => {
+      const url = customGameUrlInput ? customGameUrlInput.value.trim() : '';
+      if (url && customGameFrame) {
+        customGameFrame.src = url;
+      }
+    });
+  }
+
+  if (btnLoaderClose) btnLoaderClose.addEventListener('click', switchToFpsGame);
+  if (btnBackToFps) btnBackToFps.addEventListener('click', switchToFpsGame);
 
   // 初期フレーム開始
   requestAnimationFrame(render);
